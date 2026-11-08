@@ -18,7 +18,7 @@ services:
 
   postgres:
     image: postgres:13
-    # Đã xóa hoàn toàn mục ports: - "5432:5432" để cô lập DB với máy hos
+    # Đã xóa hoàn toàn mục ports: - "5432:5432" để cô lập DB với máy host
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
