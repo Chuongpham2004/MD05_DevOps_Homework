@@ -1,0 +1,35 @@
+services:
+  backend:
+    image: storex-backend:v4
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/storex
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=secret
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - storex-net
+
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=storex
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d storex"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - storex-net
+
+networks:
+  storex-net:
+    driver: bridge
+
+volumes:
+  postgres_data:

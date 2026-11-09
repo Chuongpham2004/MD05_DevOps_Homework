@@ -1,0 +1,11 @@
+services:
+  backend:
+    environment:
+      - ENV=dev
+      - LOG_LEVEL=debug
+    ports:
+      - "8080:8080"
+
+  postgres:
+    ports:
+      - "5435:5432"
