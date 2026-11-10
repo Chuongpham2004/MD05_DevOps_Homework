@@ -1,0 +1,27 @@
+services:
+  quickbite-db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - quickbite-net
+
+  quickbite-user:
+    image: quickbite-user:latest
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quickbite-db:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+      - SERVER_PORT=${USER_SERVER_PORT}
+    ports:
+      - "${USER_SERVER_PORT}:${USER_SERVER_PORT}"
+    depends_on:
+      - quickbite-db
+    networks:
+      - quickbite-net
+
+networks:
+  quickbite-net:
+    driver: bridge
