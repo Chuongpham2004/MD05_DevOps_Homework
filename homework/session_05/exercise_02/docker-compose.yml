@@ -1,0 +1,56 @@
+services:
+  quickbite-user:
+    image: quickbite-user-service:latest
+    container_name: quickbite-user
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quickbite-db:5432/quickbite_user_db
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    networks:
+      - quickbite-net
+
+  quickbite-restaurant:
+    image: quickbite-restaurant-service:latest
+    container_name: quickbite-restaurant
+    ports:
+      - "8082:8082"
+    environment:
+      - SERVER_PORT=8082
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quickbite-db:5432/quickbite_restaurant_db
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    networks:
+      - quickbite-net
+
+  quickbite-order:
+    image: quickbite-order-service:latest
+    container_name: quickbite-order
+    ports:
+      - "8083:8083"
+    environment:
+      - SERVER_PORT=8083
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quickbite-db:5432/quickbite_order_db
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    networks:
+      - quickbite-net
+
+  quickbite-notification:
+    image: quickbite-notification-service:latest
+    container_name: quickbite-notification
+    ports:
+      - "8084:8084"
+    environment:
+      - SERVER_PORT=8084
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quickbite-db:5432/quickbite_notification_db
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    networks:
+      - quickbite-net
+
+networks:
+  quickbite-net:
+    external: true
